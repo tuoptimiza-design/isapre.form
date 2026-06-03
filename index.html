@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Encuentra tu Mejor Isapre</title>
+<title>OptimizaTu7 — Encuentra tu mejor Isapre</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
@@ -15,7 +15,7 @@
   }
   .card {
     background: #fff;
-    max-width: 580px;
+    max-width: 600px;
     margin: 0 auto;
     border-radius: 20px;
     overflow: hidden;
@@ -28,105 +28,56 @@
     color: white;
   }
   .brand { font-size: 13px; font-weight: 700; letter-spacing: 2px; opacity: 0.7; margin-bottom: 6px; text-transform: uppercase; }
-  .header .badge {
-    background: rgba(255,255,255,0.2);
-    display: inline-block;
-    padding: 4px 14px;
-    border-radius: 20px;
-    font-size: 12px;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    margin-bottom: 12px;
-  }
-  .header h1 { font-size: 26px; font-weight: 700; margin-bottom: 8px; }
-  .header p { font-size: 14px; opacity: 0.85; line-height: 1.5; }
+  .badge { background: rgba(255,255,255,0.2); display: inline-block; padding: 4px 14px; border-radius: 20px; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 12px; }
+  .header h1 { font-size: 24px; font-weight: 700; margin-bottom: 8px; }
+  .header p { font-size: 13px; opacity: 0.85; line-height: 1.5; }
   .form-body { padding: 28px; }
-  .section-title {
-    font-size: 12px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    color: #1a73e8;
-    margin: 20px 0 12px;
-    border-bottom: 2px solid #e8f0fe;
-    padding-bottom: 6px;
-  }
+  .section-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #1a73e8; margin: 20px 0 12px; border-bottom: 2px solid #e8f0fe; padding-bottom: 6px; }
   .section-title:first-of-type { margin-top: 0; }
   .row { display: flex; gap: 12px; }
   .row .field { flex: 1; }
   .field { margin-bottom: 14px; }
   label { display: block; font-size: 13px; font-weight: 600; color: #444; margin-bottom: 5px; }
   label span.req { color: #e53935; margin-left: 2px; }
-  input, select, textarea {
-    width: 100%;
-    padding: 10px 14px;
-    border: 1.5px solid #dde3ea;
-    border-radius: 10px;
-    font-size: 14px;
-    color: #333;
-    background: #f8fafc;
-    transition: border 0.2s, box-shadow 0.2s;
-    outline: none;
-  }
-  input:focus, select:focus, textarea:focus {
-    border-color: #1a73e8;
-    box-shadow: 0 0 0 3px rgba(26,115,232,0.1);
-    background: #fff;
-  }
+  input, select, textarea { width: 100%; padding: 10px 14px; border: 1.5px solid #dde3ea; border-radius: 10px; font-size: 14px; color: #333; background: #f8fafc; transition: border 0.2s, box-shadow 0.2s; outline: none; }
+  input:focus, select:focus, textarea:focus { border-color: #1a73e8; box-shadow: 0 0 0 3px rgba(26,115,232,0.1); background: #fff; }
   textarea { resize: vertical; min-height: 70px; }
   .radio-group { display: flex; gap: 10px; flex-wrap: wrap; }
-  .radio-group label {
-    display: flex; align-items: center; gap: 6px;
-    background: #f8fafc;
-    border: 1.5px solid #dde3ea;
-    border-radius: 8px;
-    padding: 8px 14px;
-    cursor: pointer;
-    font-weight: 500;
-    font-size: 13px;
-    transition: all 0.2s;
-  }
+  .radio-group label { display: flex; align-items: center; gap: 6px; background: #f8fafc; border: 1.5px solid #dde3ea; border-radius: 8px; padding: 8px 14px; cursor: pointer; font-weight: 500; font-size: 13px; transition: all 0.2s; }
   .radio-group input[type=radio] { width: auto; }
-  .radio-group label:has(input:checked) {
-    border-color: #1a73e8;
-    background: #e8f0fe;
-    color: #1a73e8;
-  }
-  .privacy {
-    background: #f0f7ff;
-    border-radius: 10px;
-    padding: 12px 14px;
-    font-size: 12px;
-    color: #555;
-    margin: 16px 0;
-    line-height: 1.5;
-  }
+  .radio-group label:has(input:checked) { border-color: #1a73e8; background: #e8f0fe; color: #1a73e8; }
+  .privacy { background: #f0f7ff; border-radius: 10px; padding: 12px 14px; font-size: 12px; color: #555; margin: 16px 0; line-height: 1.5; }
   .privacy strong { color: #1a73e8; }
-  .btn {
-    width: 100%;
-    padding: 15px;
-    background: linear-gradient(135deg, #1a73e8, #0d47a1);
-    color: white;
-    border: none;
-    border-radius: 12px;
-    font-size: 16px;
-    font-weight: 700;
-    cursor: pointer;
-    letter-spacing: 0.5px;
-    transition: transform 0.15s, box-shadow 0.15s;
-  }
+  .btn { width: 100%; padding: 15px; background: linear-gradient(135deg, #1a73e8, #0d47a1); color: white; border: none; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; letter-spacing: 0.5px; transition: transform 0.15s, box-shadow 0.15s; }
   .btn:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(26,115,232,0.4); }
-  .btn:active { transform: translateY(0); }
   .btn:disabled { background: #aaa; cursor: not-allowed; transform: none; box-shadow: none; }
-  .success {
-    display: none;
-    text-align: center;
-    padding: 40px 28px;
-  }
-  .success .icon { font-size: 60px; margin-bottom: 16px; }
-  .success h2 { color: #1a73e8; font-size: 22px; margin-bottom: 10px; }
-  .success p { color: #666; font-size: 14px; line-height: 1.6; }
   .error-msg { color: #e53935; font-size: 12px; margin-top: 4px; display: none; }
+
+  /* LOADING */
+  #loadingScreen { display: none; text-align: center; padding: 50px 28px; }
+  .spinner { width: 52px; height: 52px; border: 5px solid #e8f0fe; border-top-color: #1a73e8; border-radius: 50%; animation: spin 0.9s linear infinite; margin: 0 auto 20px; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  #loadingScreen h3 { color: #1a73e8; font-size: 18px; margin-bottom: 8px; }
+  #loadingScreen p { color: #888; font-size: 13px; }
+
+  /* RESULTADOS */
+  #resultsScreen { display: none; padding: 28px; }
+  .results-header { text-align: center; margin-bottom: 24px; }
+  .results-header .icon { font-size: 44px; margin-bottom: 10px; }
+  .results-header h2 { color: #0d47a1; font-size: 20px; margin-bottom: 6px; }
+  .results-header p { color: #666; font-size: 13px; }
+  .plan-card { border: 2px solid #e8f0fe; border-radius: 14px; padding: 18px; margin-bottom: 14px; transition: all 0.2s; position: relative; overflow: hidden; }
+  .plan-card:hover { border-color: #1a73e8; box-shadow: 0 4px 16px rgba(26,115,232,0.12); }
+  .plan-card.top { border-color: #1a73e8; background: linear-gradient(135deg, #f0f7ff, #fff); }
+  .top-badge { position: absolute; top: 0; right: 0; background: #1a73e8; color: white; font-size: 10px; font-weight: 700; padding: 4px 12px; border-radius: 0 12px 0 10px; letter-spacing: 0.5px; }
+  .plan-rank { font-size: 11px; color: #888; font-weight: 600; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .plan-name { font-size: 17px; font-weight: 700; color: #0d47a1; margin-bottom: 4px; }
+  .plan-price { font-size: 14px; color: #1a73e8; font-weight: 600; margin-bottom: 8px; }
+  .plan-reason { font-size: 13px; color: #555; line-height: 1.5; }
+  .disclaimer { background: #fff8e1; border-radius: 10px; padding: 12px 14px; font-size: 12px; color: #795548; margin: 16px 0; line-height: 1.5; border-left: 3px solid #ffc107; }
+  .cta-footer { text-align: center; margin-top: 20px; padding-top: 20px; border-top: 2px solid #e8f0fe; }
+  .cta-footer p { font-size: 14px; color: #555; margin-bottom: 12px; }
+  .cta-footer strong { color: #0d47a1; }
   @media (max-width: 480px) { .row { flex-direction: column; gap: 0; } }
 </style>
 </head>
@@ -136,12 +87,12 @@
     <div class="brand">OptimizaTu7</div>
     <div class="badge">🔒 Gratis y sin compromiso</div>
     <h1>Encuentra tu mejor Isapre</h1>
-    <p>Completa el formulario y un especialista te contactará con el plan que más se ajusta a ti y tu familia.</p>
+    <p>Completa el formulario y recibe al instante los 5 mejores planes para tu perfil. Un especialista te contactará para confirmar tu cambio.</p>
   </div>
 
+  <!-- FORMULARIO -->
   <div class="form-body" id="formContainer">
     <form id="isamForm" novalidate>
-
       <div class="section-title">👤 Datos personales</div>
       <div class="field">
         <label>Nombre completo <span class="req">*</span></label>
@@ -156,7 +107,7 @@
         </div>
         <div class="field">
           <label>Edad titular <span class="req">*</span></label>
-          <input type="number" name="fecha_nac" placeholder="Ej: 34" min="18" max="99" required>
+          <input type="number" name="edad" placeholder="Ej: 34" min="18" max="99" required>
         </div>
       </div>
       <div class="field">
@@ -176,7 +127,7 @@
       <div class="row">
         <div class="field">
           <label>Teléfono <span class="req">*</span></label>
-          <div style="display:flex;align-items:center;border:1.5px solid #dde3ea;border-radius:10px;background:#f8fafc;overflow:hidden;transition:border 0.2s;" id="tel-wrap">
+          <div style="display:flex;align-items:center;border:1.5px solid #dde3ea;border-radius:10px;background:#f8fafc;overflow:hidden;" id="tel-wrap">
             <span style="padding:10px 10px 10px 14px;font-size:14px;color:#555;white-space:nowrap;border-right:1.5px solid #dde3ea;background:#eef2f7;">+56</span>
             <input type="tel" name="telefono" placeholder="9 1234 5678" required maxlength="12" style="border:none;border-radius:0;background:transparent;flex:1;">
           </div>
@@ -192,12 +143,12 @@
         <label>Renta mensual bruta (aprox.) <span class="req">*</span></label>
         <select name="renta" required>
           <option value="">Selecciona un rango...</option>
-          <option>Menos de $500.000</option>
-          <option>$500.000 – $800.000</option>
-          <option>$800.000 – $1.200.000</option>
-          <option>$1.200.000 – $2.000.000</option>
-          <option>$2.000.000 – $3.500.000</option>
-          <option>Más de $3.500.000</option>
+          <option value="350000">Menos de $500.000</option>
+          <option value="650000">$500.000 – $800.000</option>
+          <option value="1000000">$800.000 – $1.200.000</option>
+          <option value="1600000">$1.200.000 – $2.000.000</option>
+          <option value="2750000">$2.000.000 – $3.500.000</option>
+          <option value="4000000">Más de $3.500.000</option>
         </select>
       </div>
 
@@ -227,8 +178,7 @@
             <option>$40.000 – $70.000</option>
             <option>$70.000 – $100.000</option>
             <option>$100.000 – $150.000</option>
-            <option>$150.000 - $250.000</option>
-            <option>Más de $250.000</option>
+            <option>Más de $150.000</option>
             <option>No sé / No recuerdo</option>
           </select>
         </div>
@@ -240,11 +190,11 @@
           <label>N° de cargas <span class="req">*</span></label>
           <select name="n_cargas" required>
             <option value="">Selecciona...</option>
-            <option>0 (sin cargas)</option>
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4 o más</option>
+            <option value="0">0 (sin cargas)</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4 o más</option>
           </select>
         </div>
         <div class="field">
@@ -259,62 +209,86 @@
       <div class="section-title">🩺 Salud</div>
       <div class="field">
         <label>¿Tienes enfermedades preexistentes o tratamientos activos?</label>
-        <textarea name="preexistencias" placeholder="Ej: Hipertensión, diabetes, embarazo, ortopedia... (puedes dejarlo en blanco si no aplica)"></textarea>
+        <textarea name="preexistencias" placeholder="Ej: Hipertensión, diabetes, embarazo... (puedes dejarlo en blanco)"></textarea>
       </div>
 
       <div class="privacy">
-        <strong>🔐 Privacidad:</strong> Tus datos serán usados exclusivamente para ofrecerte una asesoría personalizada de isapre. No serán compartidos con terceros ni usados con fines comerciales distintos a este servicio.
+        <strong>🔐 Privacidad:</strong> Tus datos serán usados exclusivamente para ofrecerte una asesoría personalizada. No serán compartidos con terceros.
       </div>
-
-      <button type="submit" class="btn" id="submitBtn">✅ Quiero mi asesoría gratis</button>
+      <button type="submit" class="btn" id="submitBtn">🔍 Ver mis 5 mejores planes</button>
     </form>
   </div>
 
-  <div class="success" id="successMsg">
-    <div class="icon">🎉</div>
-    <h2>¡Listo! Recibimos tu información</h2>
-    <p>Un especialista te contactará en las próximas <strong>24–48 horas hábiles</strong> para presentarte el mejor plan de isapre según tu perfil.<br><br>Cualquier consulta puedes escribirnos por Instagram.</p>
+  <!-- LOADING -->
+  <div id="loadingScreen">
+    <div class="spinner"></div>
+    <h3>Analizando tu perfil...</h3>
+    <p>Estamos comparando todos los planes del mercado<br>para encontrar los mejores para ti 🔍</p>
+  </div>
+
+  <!-- RESULTADOS -->
+  <div id="resultsScreen">
+    <div class="results-header">
+      <div class="icon">🏆</div>
+      <h2 id="resultTitle">Tus 5 mejores planes</h2>
+      <p id="resultSubtitle">Basado en tu perfil, estos son los planes que más te convienen</p>
+    </div>
+    <div id="plansList"></div>
+    <div class="disclaimer">
+      ⚠️ <strong>Importante:</strong> Estos valores son referenciales basados en rangos del mercado actual (2026). Los precios exactos pueden variar según el plan específico. Un especialista de OptimizaTu7 te confirmará los valores definitivos.
+    </div>
+    <div class="cta-footer">
+      <p>¿Te convence alguna opción? <strong>Un especialista te contactará en las próximas 24–48 hrs</strong> para guiarte en cada paso del cambio, sin costo y sin burocracia.</p>
+    </div>
   </div>
 </div>
 
 <script>
-  // ─── CONFIGURA AQUÍ tu URL de Google Apps Script ───
   const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyHJVK9Xp7m6fkyDWhRuqfkxtbq25OzcehVl-Sd3ngY8QJHUehLP-BsZdb2utzSxHvjzA/exec";
-  // ────────────────────────────────────────────────────
 
+  // ── RUT automático ──
   const rutInput = document.querySelector('[name=rut]');
-  rutInput.addEventListener('input', (e) => {
-    let val = e.target.value.replace(/[^0-9kK]/g, '').toUpperCase();
-    if (val.length > 9) val = val.slice(0, 9);
-    if (val.length > 1) val = val.slice(0, -1).replace(/\B(?=(\d{3})+(?!\d))/g, '.') + '-' + val.slice(-1);
-    e.target.value = val;
+  rutInput.addEventListener('input', e => {
+    let v = e.target.value.replace(/[^0-9kK]/g, '').toUpperCase();
+    if (v.length > 9) v = v.slice(0, 9);
+    if (v.length > 1) v = v.slice(0, -1).replace(/\B(?=(\d{3})+(?!\d))/g, '.') + '-' + v.slice(-1);
+    e.target.value = v;
   });
 
-  document.getElementById('isamForm').addEventListener('submit', async (e) => {
+  // ── Validar RUT ──
+  function validRut(rut) {
+    const c = rut.replace(/\./g, '').replace('-', '');
+    if (c.length < 2) return false;
+    const body = c.slice(0, -1), dv = c.slice(-1).toUpperCase();
+    let sum = 0, mul = 2;
+    for (let i = body.length - 1; i >= 0; i--) { sum += parseInt(body[i]) * mul; mul = mul === 7 ? 2 : mul + 1; }
+    const exp = 11 - (sum % 11);
+    return (exp === 11 ? '0' : exp === 10 ? 'K' : String(exp)) === dv;
+  }
+
+  // ── Base de conocimiento Isapres 2026 ──
+  const isapresInfo = {
+    "Banmédica":      { red: "Red propia (Clínica Santa María, Dávila, Tabancura)", digital: "App madura", precio: "medio-alto", fortaleza: "copagos preferentes muy bajos en red propia", alzas2026: "3.5%" },
+    "Colmena":        { red: "Red abierta amplia", digital: "App mejorada", precio: "medio", fortaleza: "libre elección y amplia cobertura", alzas2026: "2.0%" },
+    "Consalud":       { red: "Red abierta nacional", digital: "App mejorada", precio: "medio", fortaleza: "congeló precios en 2026, sin alza", alzas2026: "0%" },
+    "Cruz Blanca":    { red: "Red nacional amplia", digital: "App madura", precio: "medio", fortaleza: "cobertura nacional y app completa", alzas2026: "3.5%" },
+    "Vida Tres":      { red: "Red Banmédica integrada", digital: "Buena", precio: "medio", fortaleza: "planes flexibles con red Banmédica", alzas2026: "3.5%" },
+    "Nueva Masvida":  { red: "Red propia", digital: "Atención digital", precio: "bajo-medio", fortaleza: "planes individuales accesibles, sin alza 2026", alzas2026: "0%" },
+    "Esencial":       { red: "Red selectiva digital", digital: "100% digital", precio: "bajo", fortaleza: "plataforma digital, planes simplificados y económicos", alzas2026: "2.1%" },
+  };
+
+  // ── Submit formulario ──
+  document.getElementById('isamForm').addEventListener('submit', async e => {
     e.preventDefault();
     const form = e.target;
     let valid = true;
 
-    // Validar nombre
     const nombre = form.nombre.value.trim();
     document.getElementById('err-nombre').style.display = nombre ? 'none' : 'block';
     if (!nombre) valid = false;
 
-    // Validar RUT
     const rut = form.rut.value.trim();
-    const rutClean = rut.replace(/\./g, '').replace('-', '');
-    let rutOk = false;
-    if (rutClean.length >= 2) {
-      const body = rutClean.slice(0, -1);
-      const dv = rutClean.slice(-1).toUpperCase();
-      let sum = 0, mul = 2;
-      for (let i = body.length - 1; i >= 0; i--) {
-        sum += parseInt(body[i]) * mul;
-        mul = mul === 7 ? 2 : mul + 1;
-      }
-      const exp = 11 - (sum % 11);
-      rutOk = (exp === 11 ? '0' : exp === 10 ? 'K' : String(exp)) === dv;
-    }
+    const rutOk = validRut(rut);
     document.getElementById('err-rut').style.display = rutOk ? 'none' : 'block';
     if (!rutOk) valid = false;
 
@@ -322,16 +296,17 @@
 
     const btn = document.getElementById('submitBtn');
     btn.disabled = true;
-    btn.textContent = 'Enviando...';
+    btn.textContent = 'Analizando...';
 
     const data = {
       nombre, rut,
-      fecha_nac: form.fecha_nac.value,
+      edad: form.edad.value,
       sexo: form.sexo.value,
       comuna: form.comuna.value,
       telefono: '+56 ' + form.telefono.value,
       correo: form.correo.value,
       renta: form.renta.value,
+      renta_label: form.renta.options[form.renta.selectedIndex].text,
       isapre_actual: form.isapre_actual.value,
       plan_actual: form.plan_actual.value,
       n_cargas: form.n_cargas.value,
@@ -340,17 +315,92 @@
       fecha_envio: new Date().toLocaleString('es-CL')
     };
 
+    // Guardar en Google Sheets
     try {
-      await fetch(SCRIPT_URL, {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-      });
-    } catch (err) { /* no-cors no lanza error real */ }
+      await fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
+    } catch {}
 
+    // Mostrar loading
     document.getElementById('formContainer').style.display = 'none';
-    document.getElementById('successMsg').style.display = 'block';
+    document.getElementById('loadingScreen').style.display = 'block';
+
+    // Llamar a Claude para recomendación
+    try {
+      const prompt = `Eres un experto asesor de Isapres en Chile. Analiza este perfil y recomienda los 5 mejores planes disponibles en el mercado chileno 2026.
+
+PERFIL DEL CLIENTE:
+- Nombre: ${data.nombre}
+- Edad: ${data.edad} años
+- Sexo: ${data.sexo}
+- Comuna: ${data.comuna}
+- Renta mensual bruta: ${data.renta_label}
+- Cotización 7%: aprox. $${Math.round(parseInt(data.renta || 1000000) * 0.07).toLocaleString('es-CL')}
+- Isapre actual: ${data.isapre_actual}
+- Costo plan actual: ${data.plan_actual || 'No indicado'}
+- N° de cargas: ${data.n_cargas}
+- Menores de 2 años: ${data.menores2}
+- Preexistencias: ${data.preexistencias || 'Ninguna'}
+
+INFORMACIÓN DE ISAPRES 2026:
+${JSON.stringify(isapresInfo, null, 2)}
+
+INSTRUCCIONES:
+Responde ÚNICAMENTE con un JSON válido (sin texto adicional, sin markdown). El JSON debe tener esta estructura exacta:
+{
+  "resumen": "Una frase corta personalizada con el nombre del cliente explicando el análisis",
+  "planes": [
+    {
+      "rank": 1,
+      "isapre": "Nombre Isapre",
+      "plan": "Nombre del tipo de plan recomendado",
+      "precio_estimado": "Rango estimado en pesos según su 7% y cargas",
+      "razon": "Explicación clara y personalizada de por qué este plan le conviene a este cliente específico (2-3 oraciones)"
+    }
+  ]
+}
+
+Ordena los planes del más al menos recomendado para este perfil específico. Sé directo y personalizado. No repitas la misma isapre dos veces.`;
+
+      const resp = await fetch("https://api.anthropic.com/v1/messages", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          model: "claude-sonnet-4-20250514",
+          max_tokens: 1000,
+          messages: [{ role: "user", content: prompt }]
+        })
+      });
+
+      const aiData = await resp.json();
+      const raw = aiData.content[0].text.replace(/```json|```/g, '').trim();
+      const result = JSON.parse(raw);
+
+      // Mostrar resultados
+      document.getElementById('loadingScreen').style.display = 'none';
+      document.getElementById('resultsScreen').style.display = 'block';
+      document.getElementById('resultTitle').textContent = `🏆 Tus 5 mejores planes, ${data.nombre.split(' ')[0]}`;
+      document.getElementById('resultSubtitle').textContent = result.resumen;
+
+      const list = document.getElementById('plansList');
+      list.innerHTML = '';
+      result.planes.forEach((p, i) => {
+        const isTop = i === 0;
+        list.innerHTML += `
+          <div class="plan-card ${isTop ? 'top' : ''}">
+            ${isTop ? '<div class="top-badge">⭐ MEJOR OPCIÓN</div>' : ''}
+            <div class="plan-rank">#${p.rank} Recomendado</div>
+            <div class="plan-name">${p.isapre} — ${p.plan}</div>
+            <div class="plan-price">💰 ${p.precio_estimado}</div>
+            <div class="plan-reason">${p.razon}</div>
+          </div>`;
+      });
+
+    } catch (err) {
+      document.getElementById('loadingScreen').style.display = 'none';
+      document.getElementById('resultsScreen').style.display = 'block';
+      document.getElementById('resultTitle').textContent = '✅ ¡Recibimos tu información!';
+      document.getElementById('resultSubtitle').textContent = 'Un especialista de OptimizaTu7 te contactará en las próximas 24–48 hrs con los mejores planes para tu perfil.';
+    }
   });
 </script>
 </body>
