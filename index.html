@@ -324,83 +324,148 @@
     document.getElementById('formContainer').style.display = 'none';
     document.getElementById('loadingScreen').style.display = 'block';
 
-    // Llamar a Claude para recomendación
-    try {
-      const prompt = `Eres un experto asesor de Isapres en Chile. Analiza este perfil y recomienda los 5 mejores planes disponibles en el mercado chileno 2026.
+    // ── Motor de recomendación lógico (sin IA) ──
+    const renta = parseInt(data.renta) || 1000000;
+    const cotizacion = Math.round(renta * 0.07);
+    const cargas = parseInt(data.n_cargas) || 0;
+    const edad = parseInt(data.edad) || 35;
+    const menores2 = data.menores2 === 'Sí';
+    const preex = data.preexistencias.trim().length > 0;
+    const nombre1 = data.nombre.split(' ')[0];
 
-PERFIL DEL CLIENTE:
-- Nombre: ${data.nombre}
-- Edad: ${data.edad} años
-- Sexo: ${data.sexo}
-- Comuna: ${data.comuna}
-- Renta mensual bruta: ${data.renta_label}
-- Cotización 7%: aprox. $${Math.round(parseInt(data.renta || 1000000) * 0.07).toLocaleString('es-CL')}
-- Isapre actual: ${data.isapre_actual}
-- Costo plan actual: ${data.plan_actual || 'No indicado'}
-- N° de cargas: ${data.n_cargas}
-- Menores de 2 años: ${data.menores2}
-- Preexistencias: ${data.preexistencias || 'Ninguna'}
+    // Puntaje por isapre según perfil
+    const scores = {
+      "Esencial":      { score: 0, plan: "Plan Digital Básico", razon: "" },
+      "Nueva Masvida": { score: 0, plan: "Plan Individual", razon: "" },
+      "Consalud":      { score: 0, plan: "Plan Preferente", razon: "" },
+      "Colmena":       { score: 0, plan: "Plan Libre Elección", razon: "" },
+      "Cruz Blanca":   { score: 0, plan: "Plan Red Preferente", razon: "" },
+      "Vida Tres":     { score: 0, plan: "Plan Red Banmédica", razon: "" },
+      "Banmédica":     { score: 0, plan: "Plan Preferente Red Propia", razon: "" },
+    };
 
-INFORMACIÓN DE ISAPRES 2026:
-${JSON.stringify(isapresInfo, null, 2)}
-
-INSTRUCCIONES:
-Responde ÚNICAMENTE con un JSON válido (sin texto adicional, sin markdown). El JSON debe tener esta estructura exacta:
-{
-  "resumen": "Una frase corta personalizada con el nombre del cliente explicando el análisis",
-  "planes": [
-    {
-      "rank": 1,
-      "isapre": "Nombre Isapre",
-      "plan": "Nombre del tipo de plan recomendado",
-      "precio_estimado": "Rango estimado en pesos según su 7% y cargas",
-      "razon": "Explicación clara y personalizada de por qué este plan le conviene a este cliente específico (2-3 oraciones)"
+    // Reglas de puntuación
+    // Por renta baja → priorizar económicas
+    if (renta < 650000) {
+      scores["Esencial"].score += 5;
+      scores["Nueva Masvida"].score += 4;
+      scores["Consalud"].score += 3;
+    } else if (renta < 1200000) {
+      scores["Consalud"].score += 4;
+      scores["Colmena"].score += 4;
+      scores["Nueva Masvida"].score += 3;
+      scores["Cruz Blanca"].score += 3;
+    } else if (renta < 2000000) {
+      scores["Colmena"].score += 4;
+      scores["Cruz Blanca"].score += 4;
+      scores["Consalud"].score += 3;
+      scores["Vida Tres"].score += 3;
+    } else {
+      scores["Banmédica"].score += 5;
+      scores["Vida Tres"].score += 4;
+      scores["Cruz Blanca"].score += 3;
+      scores["Colmena"].score += 3;
     }
-  ]
-}
 
-Ordena los planes del más al menos recomendado para este perfil específico. Sé directo y personalizado. No repitas la misma isapre dos veces.`;
-
-      const resp = await fetch("https://api.anthropic.com/v1/messages", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          model: "claude-sonnet-4-20250514",
-          max_tokens: 1000,
-          messages: [{ role: "user", content: prompt }]
-        })
-      });
-
-      const aiData = await resp.json();
-      const raw = aiData.content[0].text.replace(/```json|```/g, '').trim();
-      const result = JSON.parse(raw);
-
-      // Mostrar resultados
-      document.getElementById('loadingScreen').style.display = 'none';
-      document.getElementById('resultsScreen').style.display = 'block';
-      document.getElementById('resultTitle').textContent = `🏆 Tus 5 mejores planes, ${data.nombre.split(' ')[0]}`;
-      document.getElementById('resultSubtitle').textContent = result.resumen;
-
-      const list = document.getElementById('plansList');
-      list.innerHTML = '';
-      result.planes.forEach((p, i) => {
-        const isTop = i === 0;
-        list.innerHTML += `
-          <div class="plan-card ${isTop ? 'top' : ''}">
-            ${isTop ? '<div class="top-badge">⭐ MEJOR OPCIÓN</div>' : ''}
-            <div class="plan-rank">#${p.rank} Recomendado</div>
-            <div class="plan-name">${p.isapre} — ${p.plan}</div>
-            <div class="plan-price">💰 ${p.precio_estimado}</div>
-            <div class="plan-reason">${p.razon}</div>
-          </div>`;
-      });
-
-    } catch (err) {
-      document.getElementById('loadingScreen').style.display = 'none';
-      document.getElementById('resultsScreen').style.display = 'block';
-      document.getElementById('resultTitle').textContent = '✅ ¡Recibimos tu información!';
-      document.getElementById('resultSubtitle').textContent = 'Un especialista de OptimizaTu7 te contactará en las próximas 24–48 hrs con los mejores planes para tu perfil.';
+    // Por cargas familiares
+    if (cargas === 0) {
+      scores["Esencial"].score += 3;
+      scores["Nueva Masvida"].score += 2;
+    } else if (cargas <= 2) {
+      scores["Consalud"].score += 3;
+      scores["Colmena"].score += 2;
+      scores["Cruz Blanca"].score += 2;
+    } else {
+      scores["Colmena"].score += 3;
+      scores["Cruz Blanca"].score += 3;
+      scores["Banmédica"].score += 2;
     }
+
+    // Menores de 2 años → priorizar red fuerte
+    if (menores2) {
+      scores["Banmédica"].score += 4;
+      scores["Vida Tres"].score += 3;
+      scores["Cruz Blanca"].score += 2;
+    }
+
+    // Preexistencias → evitar isapres con restricciones, priorizar red amplia
+    if (preex) {
+      scores["Colmena"].score += 3;
+      scores["Cruz Blanca"].score += 3;
+      scores["Consalud"].score += 2;
+      scores["Esencial"].score -= 2;
+    }
+
+    // Edad
+    if (edad < 30) {
+      scores["Esencial"].score += 3;
+      scores["Nueva Masvida"].score += 2;
+    } else if (edad < 45) {
+      scores["Colmena"].score += 2;
+      scores["Consalud"].score += 2;
+    } else {
+      scores["Banmédica"].score += 3;
+      scores["Cruz Blanca"].score += 2;
+      scores["Colmena"].score += 2;
+    }
+
+    // Alzas 2026: bonus a las que NO subieron
+    scores["Consalud"].score += 3;    // 0% alza
+    scores["Nueva Masvida"].score += 2; // 0% alza
+    scores["Esencial"].score += 1;    // 2.1%
+
+    // No recomendar isapre actual (ya la tiene)
+    if (scores[data.isapre_actual]) scores[data.isapre_actual].score -= 10;
+
+    // Razones personalizadas
+    const cotStr = `${cotizacion.toLocaleString('es-CL')}`;
+    scores["Esencial"].razon      = `Ideal para ${nombre1} por su bajo costo y gestión 100% digital. Con tu cotización de ${cotStr} cubre lo esencial sin pagar de más. Perfecta si usas poco el sistema de salud.`;
+    scores["Nueva Masvida"].razon = `Sin alzas en 2026, lo que la hace muy conveniente para tu presupuesto. Con ${cargas} carga(s) y cotización de ${cotStr}, ofrece una buena relación precio-cobertura.`;
+    scores["Consalud"].razon      = `Congeló sus precios en 2026 (0% de alza), lo que representa ahorro real frente a otras. Su red abierta nacional te da flexibilidad para atenderte donde prefieras.`;
+    scores["Colmena"].razon       = `Una de las isapres con mayor libertad de elección del mercado. Con tu perfil de ${edad} años y ${cargas} carga(s), accedes a una amplia red de prestadores a nivel nacional.`;
+    scores["Cruz Blanca"].razon   = `Red nacional robusta con app digital madura. ${menores2 ? 'Especialmente recomendada al tener menores de 2 años, con excelente cobertura pediátrica.' : 'Buena opción por su equilibrio entre precio y cobertura para tu tramo de renta.'}`;
+    scores["Vida Tres"].razon     = `Acceso a la red Banmédica (Clínica Santa María, Dávila) con planes más flexibles. ${preex ? 'Con preexistencias, esta red de alta complejidad te da mayor respaldo.' : 'Recomendada si valoras atención en clínicas de primer nivel.'}`;
+    scores["Banmédica"].razon     = `La mejor red propia del mercado chileno con copagos preferentes muy bajos. ${menores2 ? 'Con menores de 2 años en tu grupo familiar, su cobertura pediátrica es imbatible.' : 'Con tu renta, es la opción premium que más valor entrega por lo que pagas.'}`;
+
+    // Precio estimado por isapre
+    const precioBase = {
+      "Esencial":      [20000, 45000],
+      "Nueva Masvida": [25000, 55000],
+      "Consalud":      [30000, 70000],
+      "Colmena":       [35000, 80000],
+      "Cruz Blanca":   [30000, 75000],
+      "Vida Tres":     [40000, 95000],
+      "Banmédica":     [45000, 110000],
+    };
+
+    // Ordenar y tomar top 5
+    const ranking = Object.entries(scores)
+      .sort((a, b) => b[1].score - a[1].score)
+      .slice(0, 5);
+
+    // Mostrar resultados
+    document.getElementById('loadingScreen').style.display = 'none';
+    document.getElementById('resultsScreen').style.display = 'block';
+    document.getElementById('resultTitle').textContent = `🏆 Tus 5 mejores planes, ${nombre1}`;
+    document.getElementById('resultSubtitle').textContent = `Analizamos tu perfil completo y encontramos las opciones que más se ajustan a ti${cargas > 0 ? ' y tu familia' : ''}.`;
+
+    const list = document.getElementById('plansList');
+    list.innerHTML = '';
+    ranking.forEach(([isapre, info], i) => {
+      const isTop = i === 0;
+      const pb = precioBase[isapre];
+      const adj = Math.min(cotizacion, pb[1]);
+      const pMin = Math.max(pb[0], Math.round(cotizacion * 0.15)).toLocaleString('es-CL');
+      const pMax = Math.round(adj * (1 + cargas * 0.15)).toLocaleString('es-CL');
+      list.innerHTML += `
+        <div class="plan-card ${isTop ? 'top' : ''}">
+          ${isTop ? '<div class="top-badge">⭐ MEJOR OPCIÓN</div>' : ''}
+          <div class="plan-rank">#${i+1} Recomendado</div>
+          <div class="plan-name">${isapre} — ${info.plan}</div>
+          <div class="plan-price">💰 Adicional estimado: ${pMin} – ${pMax}/mes</div>
+          <div class="plan-reason">${info.razon}</div>
+        </div>`;
+    });
   });
 </script>
 </body>
