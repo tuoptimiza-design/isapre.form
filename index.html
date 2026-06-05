@@ -294,22 +294,53 @@
 
     if (!valid) return;
 
+    // Validar todos los campos obligatorios
+    const edad = form.edad.value.trim();
+    const sexo = form.sexo.value;
+    const comuna = form.comuna.value.trim();
+    const telefono = form.telefono.value.trim();
+    const correo = form.correo.value.trim();
+    const renta = form.renta.value;
+    const isapre = form.isapre_actual.value;
+    const cargas = form.n_cargas.value;
+
+    const campos = [
+      { val: edad,     msg: 'Ingresa tu edad.' },
+      { val: sexo,     msg: 'Selecciona tu sexo.' },
+      { val: comuna,   msg: 'Ingresa tu comuna.' },
+      { val: telefono, msg: 'Ingresa tu teléfono.' },
+      { val: correo,   msg: 'Ingresa tu correo.' },
+      { val: renta,    msg: 'Selecciona tu renta.' },
+      { val: isapre,   msg: 'Selecciona tu Isapre actual.' },
+      { val: cargas,   msg: 'Selecciona el número de cargas.' },
+    ];
+
+    for (const c of campos) {
+      if (!c.val) {
+        alert('⚠️ ' + c.msg);
+        return;
+      }
+    }
+
     const btn = document.getElementById('submitBtn');
     btn.disabled = true;
     btn.textContent = 'Analizando...';
 
+    // Limpiar teléfono: solo dígitos, sin espacios
+    const telefonoLimpio = '+56' + telefono.replace(/\s+/g, '').replace(/^\+?56/, '');
+
     const data = {
       nombre, rut,
-      edad: form.edad.value,
-      sexo: form.sexo.value,
-      comuna: form.comuna.value,
-      telefono: '+56 ' + form.telefono.value,
-      correo: form.correo.value,
-      renta: form.renta.value,
+      edad,
+      sexo,
+      comuna,
+      telefono: telefonoLimpio,
+      correo,
+      renta,
       renta_label: form.renta.options[form.renta.selectedIndex].text,
-      isapre_actual: form.isapre_actual.value,
+      isapre_actual: isapre,
       plan_actual: form.plan_actual.value,
-      n_cargas: form.n_cargas.value,
+      n_cargas: cargas,
       menores2: form.menores2.value,
       preexistencias: form.preexistencias.value,
       fecha_envio: new Date().toLocaleString('es-CL')
@@ -413,6 +444,11 @@
     scores["Consalud"].score += 3;    // 0% alza
     scores["Nueva Masvida"].score += 2; // 0% alza
     scores["Esencial"].score += 1;    // 2.1%
+
+    // Consalud siempre primera (salvo que sea su isapre actual)
+    if (data.isapre_actual !== "Consalud") {
+      scores["Consalud"].score = 9999;
+    }
 
     // No recomendar isapre actual (ya la tiene)
     if (scores[data.isapre_actual]) scores[data.isapre_actual].score -= 10;
